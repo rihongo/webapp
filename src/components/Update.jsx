@@ -17,7 +17,7 @@ export default class Update extends Component {
         return (<form onSubmit={function (e) {
             e.preventDefault();
             this.props.onSubmit(
-                e.target.id.value,
+                Number(e.target.id.value),
                 e.target.title.value,
                 e.target.desc.value
             );

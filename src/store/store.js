@@ -15,18 +15,16 @@ const initState = {
     ]
 }
 const reducer = (state=initState, action) => {
-    console.log(action)
+    console.log(action.type);
     if (action.type === 'WELCOME'){
         return {...state, mode: action.mode};
     } else if (action.type === 'READ'){
-        console.log(state)
         return {...state, mode: 'READ', selected_content_id: action.id};
     }
     if (action.type === 'CREATE') {
         return {...state, mode: 'CREATE'}
     }
     if (action.type === 'CREATE_PROCESS') {
-        console.log(state);
         let newId = state.max_content_id + 1;
         let newContents = [
             ...state.contents,
@@ -45,8 +43,20 @@ const reducer = (state=initState, action) => {
         }
     }
     if (action.type === 'UPDATE') {
-        console.log(state)
         return {...state, mode: 'UPDATE'};
+    }
+    if (action.type === 'UPDATE_PROCESS') {
+        const newContents = [...state.contents];
+        console.log(newContents);
+
+        for (let i=0; i<newContents.length; i++) {
+            if (newContents[i].id === action.id){
+                newContents[i].title = action.title;
+                newContents[i].desc = action.desc;
+            }
+        }
+        console.log(newContents);
+        return {...state, contents: newContents, mode:'READ', selected_content_id: action.id}
     }
     if (action.type === 'DELETE') {
         return {...state, mode: action.mode}

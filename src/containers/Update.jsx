@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 export default connect(
     function (state) {
         let title,desc,id;
-
         state.contents.forEach(data => {
             if(data.id === state.selected_content_id){
                 id = data.id;
@@ -21,8 +20,7 @@ export default connect(
     }, function (dispatch) {
         return {
             onSubmit: (id,title,desc) => {
-                console.log(id, title, desc)
-                dispatch({type:'READ',id,title,desc})
+                dispatch({type:'UPDATE_PROCESS',id,title,desc})
             }
         }
     }
