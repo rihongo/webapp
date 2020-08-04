@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import Header from "./components/Header";
+import Nav from "./containers/Nav";
+import Read from "./containers/Read";
+import Control from "./containers/Control";
+import Create from "./containers/Create";
+import {connect} from "react-redux";
+import Update from "./containers/Update";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+    render() {
+        let article = null;
+        if (this.props.mode === 'WELCOME') {
+            article = <Read></Read>;
+        } else if (this.props.mode === 'READ') {
+            article = <Read></Read>;
+        } else if (this.props.mode === 'CREATE') {
+            article = <Create/>;
+        } else if (this.props.mode === 'UPDATE') {
+            article = <Update/>;
+        }
+        return (
+            <div className="App">
+                <Header/>
+                <Control/>
+                <Nav/>
+                {article}
+
+            </div>
+        );
+    }
 }
 
-export default App;
+export default connect(
+    function (state) {
+        return {
+            mode: state.mode
+        }
+    }
+)(App);
